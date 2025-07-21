@@ -7,46 +7,65 @@ import joblib
 
 import streamlit_authenticator as stauth
 
-# --- User credentials ---
-users = {
-    "james": {"name": "James Joyce", "password": "pass123", "email": "james@example.com"},
-    "emma": {"name": "Emma Stone", "password": "hello456", "email": "emma@example.com"},
-}
+import streamlit as st
+import streamlit_authenticator as stauth
 
-# --- Hash passwords ---
-hashed_passwords = stauth.Hasher([users[u]["password"] for u in users]).generate()
-
-# --- Setup authentication ---
-credentials = {
-    "usernames": {
-        u: {"name": users[u]["name"], "password": pwd, "email": users[u]["email"]}
-        for u, pwd in zip(users.keys(), hashed_passwords)
+# --- Define users with plaintext passwords ---
+user_data = {
+    "james": {
+        "name": "James Joyce",
+        "email": "james@example.com",
+        "password": "pass123"
+    },
+    "emma": {
+        "name": "Emma Stone",
+        "email": "emma@example.com",
+        "password": "hello456"
     }
 }
 
+# --- Extract passwords and hash them ---
+passwords = [user_data[user]["password"] for user in user_data]
+hashed_passwords = stauth.Hasher(passwords).generate()
+
+# --- Build credentials dictionary ---
+credentials = {
+    "usernames": {
+        username: {
+            "name": user_data[username]["name"],
+            "email": user_data[username]["email"],
+            "password": hashed_passwords[i]
+        }
+        for i, username in enumerate(user_data)
+    }
+}
+
+# --- Setup authenticator ---
 authenticator = stauth.Authenticate(
     credentials,
-    "my_app",        # cookie name
-    "abcdef",        # signature key (change to anything random for security)
+    "my_app_cookie",    # Cookie name
+    "my_secret_key",    # Replace with a random string for production
     cookie_expiry_days=1
 )
 
-# --- Login widget ---
+# --- Login form ---
 name, authentication_status, username = authenticator.login("Login", "main")
 
-# --- Logic ---
+# --- Login logic ---
 if authentication_status:
     st.success(f"Welcome, {name}!")
     st.info(f"Logged in as: {credentials['usernames'][username]['email']}")
+    authenticator.logout("Logout", "sidebar")
 
-    # --- Place your app/dashboard here ---
-    st.write("This is your protected dashboard.")
+    # --- Your dashboard starts here ---
+    st.header("📊 Protected Dashboard")
+    st.write("This is a private dashboard only visible to logged-in users.")
 
 elif authentication_status is False:
-    st.error("Username/password is incorrect")
+    st.error("❌ Incorrect username or password.")
 
 elif authentication_status is None:
-    st.warning("Please enter your username and password")
+    st.warning("👤 Please enter your username and password.")
 
 
 df = pd.read_csv('cleaned_for_python.csv')
