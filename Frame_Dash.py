@@ -68,27 +68,13 @@ bayesian_pipeline = Pipeline([
 # === 4. Fit Model ===
 bayesian_pipeline.fit(X_train, y_train)
 
-import streamlit as st
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy.stats import percentileofscore
-import joblib  # Assuming you saved your pipeline wit
-
 
 # === 1. UCLA Logo at the Top of Sidebar ===
-st.sidebar.image("/Users/jamesjoyce/Metric_Dashboard_v2/ucla_logo.png", use_container_width=True)
+st.sidebar.image("ucla_logo.png", use_container_width=True)
 
 st.title("Frame Score Model")
 
 
-# === Load Data and Model ===
-#df_stats = pd.read_excel('/Users/jamesjoyce/Metric_Dashboard/ANTHRO.xlsx', sheet_name="Sheet1")
-df_filtered = pd.read_csv('/Users/jamesjoyce/Downloads/cleaned_for_python.csv')
-df_filtered = df_filtered[['Weight.x','Height','Converted_Arm','Converted_Hand','Position_Group']]
-bayesian_pipeline = joblib.load("/Users/jamesjoyce/Metric_Dashboard/bayesian_ridge_model.pkl")  # Update with actual path
-features = joblib.load("/Users/jamesjoyce/Metric_Dashboard/model_features.pkl")  
-#st of feature column names used in model
 
 # Sidebar filters
 st.sidebar.header("Filters")
@@ -98,7 +84,7 @@ position_options = sorted(
     [pos for pos in df_filtered["Position_Group"].dropna().unique() if pos not in ["DL", "OL"]]
 )
 
-df_filtered.columns = ['HS_Weight','Height','Arm_Length','Hand_Size','Position_Group']
+df.columns = ['HS_Weight','Height','Arm_Length','Hand_Size','Position_Group']
 
 # === User Inputs ===
 st.sidebar.header("Enter Player Metrics")
