@@ -6,66 +6,6 @@ from scipy.stats import percentileofscore
 import joblib
 import streamlit_authenticator as stauth
 
-import streamlit as st
-import streamlit_authenticator as stauth
-
-# --- Define users with plaintext passwords ---
-user_data = {
-    "james": {
-        "name": "James Joyce",
-        "email": "james@example.com",
-        "password": "pass123"
-    },
-    "emma": {
-        "name": "Emma Stone",
-        "email": "emma@example.com",
-        "password": "hello456"
-    }
-}
-
-# --- Hash passwords individually ---
-hasher = stauth.Hasher()
-hashed_passwords = [hasher.hash(pw) for pw in [user_data[user]["password"] for user in user_data]]
-
-# --- Build credentials dictionary ---
-credentials = {
-    "usernames": {
-        username: {
-            "name": user_data[username]["name"],
-            "email": user_data[username]["email"],
-            "password": hashed_passwords[i]
-        }
-        for i, username in enumerate(user_data)
-    }
-}
-
-# --- Setup authenticator ---
-authenticator = stauth.Authenticate(
-    credentials,
-    "my_app_cookie",     # Cookie name
-    "my_secret_key_xyz", # Signature key (should be unique & secret)
-    cookie_expiry_days=1
-)
-
-# --- Login form ---
-name, authentication_status, username = authenticator.login("Login", "main")
-
-# --- Login logic ---
-if authentication_status:
-    st.success(f"Welcome, {name}!")
-    st.info(f"Logged in as: {credentials['usernames'][username]['email']}")
-    authenticator.logout("Logout", "sidebar")
-
-    # --- Your dashboard starts here ---
-    st.header("📊 Protected Dashboard")
-    st.write("This is a private dashboard only visible to logged-in users.")
-
-elif authentication_status is False:
-    st.error("❌ Incorrect username or password.")
-
-elif authentication_status is None:
-    st.warning("👤 Please enter your credentials.")
-
 
 
 df = pd.read_csv('cleaned_for_python.csv')
