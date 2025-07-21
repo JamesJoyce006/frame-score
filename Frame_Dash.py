@@ -5,6 +5,48 @@ import matplotlib.pyplot as plt
 from scipy.stats import percentileofscore
 import joblib
 
+import streamlit_authenticator as stauth
+
+# --- User credentials ---
+users = {
+    "james": {"name": "James Joyce", "password": "pass123", "email": "james@example.com"},
+    "emma": {"name": "Emma Stone", "password": "hello456", "email": "emma@example.com"},
+}
+
+# --- Hash passwords ---
+hashed_passwords = stauth.Hasher([users[u]["password"] for u in users]).generate()
+
+# --- Setup authentication ---
+credentials = {
+    "usernames": {
+        u: {"name": users[u]["name"], "password": pwd, "email": users[u]["email"]}
+        for u, pwd in zip(users.keys(), hashed_passwords)
+    }
+}
+
+authenticator = stauth.Authenticate(
+    credentials,
+    "my_app",        # cookie name
+    "abcdef",        # signature key (change to anything random for security)
+    cookie_expiry_days=1
+)
+
+# --- Login widget ---
+name, authentication_status, username = authenticator.login("Login", "main")
+
+# --- Logic ---
+if authentication_status:
+    st.success(f"Welcome, {name}!")
+    st.info(f"Logged in as: {credentials['usernames'][username]['email']}")
+
+    # --- Place your app/dashboard here ---
+    st.write("This is your protected dashboard.")
+
+elif authentication_status is False:
+    st.error("Username/password is incorrect")
+
+elif authentication_status is None:
+    st.warning("Please enter your username and password")
 
 
 df = pd.read_csv('cleaned_for_python.csv')
