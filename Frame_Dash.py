@@ -42,7 +42,7 @@ for group in df['Position_Group'].unique():
 
 # Define features and target
 interaction_terms = [f'HS_Weight_x_{group}' for group in df['Position_Group'].unique()]
-features = ['Height', 'Hand_Size', 'Arm_Length'] + interaction_terms
+features = ['Height', 'HS_Weight','Hand_Size', 'Arm_Length'] + interaction_terms
 X = df[features]
 y = df['College_Weight']  # replace with the actual column name if different
 
