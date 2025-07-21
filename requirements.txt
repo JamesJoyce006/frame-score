@@ -2,3 +2,4 @@ seaborn
 scipy
 joblib
 scikit-learn
+plotly.graph_objects
