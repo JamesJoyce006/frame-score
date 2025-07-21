@@ -11,7 +11,7 @@ st.title("Information About Model")
 
 st.subheader("What is Ridge Regression?")
 # Sample placeholder content
-st.sidebar.image("/Users/jamesjoyce/Metric_Dashboard_v2/ucla_logo.png", use_container_width=True)
+st.sidebar.image("ucla_logo.png", use_container_width=True)
 
 
 
@@ -35,11 +35,11 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 st.subheader('Evaluation Metrics of the Model')
 
-coefficients = pd.read_csv('/Users/jamesjoyce/Metric_Dashboard_v2/Ridge_Regression_FM_Coefficients.csv',index_col=0)
+coefficients = pd.read_csv('Ridge_Regression_FM_Coefficients.csv',index_col=0)
 
-rr_summary = pd.read_csv('/Users/jamesjoyce/Metric_Dashboard_v2/Ridge_Regression_FM_Eval.csv',index_col=0)
+rr_summary = pd.read_csv('Ridge_Regression_FM_Eval.csv',index_col=0)
 
-interval_data =  pd.read_csv('/Users/jamesjoyce/Metric_Dashboard_v2/Frame_Score_Interval_Data.csv')
+interval_data =  pd.read_csv('Frame_Score_Interval_Data.csv')
 
 
 col1, col2 = st.columns(2)
