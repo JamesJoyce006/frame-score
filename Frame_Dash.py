@@ -23,10 +23,9 @@ user_data = {
     }
 }
 
-# --- Hash passwords using new method ---
-passwords = [user_data[user]["password"] for user in user_data]
+# --- Hash passwords individually ---
 hasher = stauth.Hasher()
-hashed_passwords = hasher.hash(passwords)
+hashed_passwords = [hasher.hash(pw) for pw in [user_data[user]["password"] for user in user_data]]
 
 # --- Build credentials dictionary ---
 credentials = {
@@ -43,29 +42,31 @@ credentials = {
 # --- Setup authenticator ---
 authenticator = stauth.Authenticate(
     credentials,
-    "my_app_cookie",    # Cookie name
-    "my_secret_key",    # Signature key
+    "my_app_cookie",     # Cookie name
+    "my_secret_key_xyz", # Signature key (should be unique & secret)
     cookie_expiry_days=1
 )
 
-# --- Login widget ---
+# --- Login form ---
 name, authentication_status, username = authenticator.login("Login", "main")
 
-# --- Post-login logic ---
+# --- Login logic ---
 if authentication_status:
     st.success(f"Welcome, {name}!")
     st.info(f"Logged in as: {credentials['usernames'][username]['email']}")
     authenticator.logout("Logout", "sidebar")
 
-    # --- Secure dashboard section ---
+    # --- Your dashboard starts here ---
     st.header("📊 Protected Dashboard")
-    st.write("This is a private dashboard for logged-in users only.")
+    st.write("This is a private dashboard only visible to logged-in users.")
 
 elif authentication_status is False:
     st.error("❌ Incorrect username or password.")
 
 elif authentication_status is None:
     st.warning("👤 Please enter your credentials.")
+
+
 
 df = pd.read_csv('cleaned_for_python.csv')
 df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Position_Group']]
