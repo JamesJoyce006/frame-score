@@ -10,8 +10,6 @@ import joblib
 
 df_filtered = pd.read_csv('cleaned_for_python.csv')
 df_filtered = df_filtered[['Weight.x','Height','Converted_Arm','Converted_Hand','Position_Group']]
-bayesian_pipeline = joblib.load("bayesian_ridge_model.pkl")  # Update with actual path
-features = joblib.load("model_features.pkl")
 
 import pandas as pd
 import numpy as np
