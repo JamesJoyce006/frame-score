@@ -83,8 +83,8 @@ feature_importance = pd.DataFrame({
 print(feature_importance)
 
 # === 7. Prediction Intervals ===
-lower_bound = y_pred - 1.7 * y_std
-upper_bound = y_pred + 1.7 * y_std
+lower_bound = y_pred - 1. * y_std
+upper_bound = y_pred + 1.8 * y_std
 
 interval_df = pd.DataFrame({
     'Predicted': y_pred,
@@ -165,8 +165,8 @@ def predict_college_weight(HS_Weight, Height, Hand_Size, Arm_Length, Position_Gr
 
     # Predict with interval
     prediction, std = bayesian_pipeline.predict(input_df, return_std=True)
-    lower = prediction[0] - 1.5 * std[0]
-    upper = prediction[0] + 1.5 * std[0]
+    lower = prediction[0] - 1.8 * std[0]
+    upper = prediction[0] + 1.8 * std[0]
 
     return prediction[0], lower, upper
 
