@@ -146,8 +146,8 @@ def predict_college_weight(HS_Weight, Height, Hand_Size, Arm_Length, Position_Gr
     input_df = pd.DataFrame({
         'HS_Weight': [HS_Weight],
         'Height': [Height],
-        'Converted_Hand': [Hand_Size],
-        'Converted_Arm': [Arm_Length],
+        'Hand_Size': [Hand_Size],
+        'Arm_Length': [Arm_Length],
         'Position_Group': [Position_Group]
     })
 
