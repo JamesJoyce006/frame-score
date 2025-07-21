@@ -12,8 +12,14 @@ df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Positi
 
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import BayesianRidge
 from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 df = df.rename(columns={'Weight.x': 'College_Weight', 'Weight.y': 'HS_Weight','Converted_Arm':'Arm_Length','Converted_Hand':'Hand_Size'})
 df = df[~df['Position_Group'].isin(['OL', 'DL'])]
@@ -26,38 +32,9 @@ print(df.head())
 #
 #
 
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import BayesianRidge
-from sklearn.metrics import mean_squared_error, r2_score
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# === 1. Load and Prepare Data ===
-# Assume df is your existing DataFrame
-# df = pd.read_csv('your_data.csv') or similar
-
-# Center the continuous predictor
-
-df = pd.read_csv('/Users/jamesjoyce/Downloads/cleaned_for_python.csv')
-print(df.head())
-
-df = df.rename(columns={'Weight.x': 'College_Weight', 'Weight.y': 'HS_Weight'})
-print(df.head())
-
-df = df[~df['Position_Group'].isin(['OL', 'DL'])]
-df = df.fillna(df.mean(numeric_only=True))
-
-#df['HS_Weight_centered'] = df['HS_Weight'] - df['HS_Weight'].mean()
 
 
 
-print(df['Position_Group'].unique())
-df['Position_Group'] = df['Position_Group'].astype('category')
 
 # Create interaction terms manually
 for group in df['Position_Group'].unique():
