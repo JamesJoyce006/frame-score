@@ -8,8 +8,8 @@ import joblib
 
 
 
-df_filtered = pd.read_csv('cleaned_for_python.csv')
-df_filtered = df_filtered[['Weight.x','Height','Converted_Arm','Converted_Hand','Position_Group']]
+df = pd.read_csv('cleaned_for_python.csv')
+df = df[['Weight.x','Height','Converted_Arm','Converted_Hand','Position_Group']]
 
 import pandas as pd
 import numpy as np
