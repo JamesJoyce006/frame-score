@@ -141,13 +141,13 @@ metrics = {
     
 }
 
-def predict_college_weight(HS_Weight, Height, Converted_Hand, Converted_Arm, Position_Group):
+def predict_college_weight(HS_Weight, Height, Hand_Size, Arm_Length, Position_Group):
     # Create input DataFrame
     input_df = pd.DataFrame({
         'HS_Weight': [HS_Weight],
         'Height': [Height],
-        'Converted_Hand': [Converted_Hand],
-        'Converted_Arm': [Converted_Arm],
+        'Converted_Hand': [Hand_Size],
+        'Converted_Arm': [Arm_Length],
         'Position_Group': [Position_Group]
     })
 
