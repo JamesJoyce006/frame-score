@@ -7,7 +7,6 @@ import joblib
 
 
 
-
 df = pd.read_csv('cleaned_for_python.csv')
 df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Position_Group']]
 
@@ -16,7 +15,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
-df = df.rename(columns={'Weight.x': 'College_Weight', 'Weight.y': 'HS_Weight'})
+df = df.rename(columns={'Weight.x': 'College_Weight', 'Weight.y': 'HS_Weight','Converted_Arm':'Arm_Length','Converted_Hand':'Hand_Size'})
 df = df[~df['Position_Group'].isin(['OL', 'DL'])]
 df = df.fillna(df.mean(numeric_only=True))
 df['Position_Group'] = df['Position_Group'].astype('category')
@@ -47,7 +46,7 @@ for group in df['Position_Group'].unique():
 
 # Define features and target
 interaction_terms = [f'HS_Weight_x_{group}' for group in df['Position_Group'].unique()]
-features = ['HS_Weight', 'Height', 'Converted_Hand', 'Converted_Arm'] + interaction_terms
+features = ['HS_Weight', 'Height', 'Hand_Size', 'Arm_Length'] + interaction_terms
 X = df[features]
 y = df['College_Weight']  # replace with the actual column name if different
 
@@ -84,7 +83,7 @@ position_options = sorted(
     [pos for pos in df["Position_Group"].dropna().unique() if pos not in ["DL", "OL"]]
 )
 
-df.columns = ['HS_Weight','Height','Arm_Length','Hand_Size','Position_Group']
+
 
 # === User Inputs ===
 st.sidebar.header("Enter Player Metrics")
