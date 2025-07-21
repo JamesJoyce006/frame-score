@@ -81,7 +81,7 @@ st.sidebar.header("Filters")
 
 # Add 'All' option to position filter
 position_options = sorted(
-    [pos for pos in df_filtered["Position_Group"].dropna().unique() if pos not in ["DL", "OL"]]
+    [pos for pos in df["Position_Group"].dropna().unique() if pos not in ["DL", "OL"]]
 )
 
 df.columns = ['HS_Weight','Height','Arm_Length','Hand_Size','Position_Group']
@@ -95,7 +95,7 @@ arm_length = st.sidebar.number_input("Arm Length (inches)", min_value=10.0, max_
 hs_weight = st.sidebar.number_input("High School Weight", min_value=0.0, max_value=400.0, step=0.125)
 
 
-df_filtered = df_filtered[df_filtered["Position_Group"] == position]
+df_filtered = df[df["Position_Group"] == position]
 metrics = {
     "Height": height,
     "Hand_Size": hand_size,
@@ -115,7 +115,7 @@ def predict_college_weight(HS_Weight, Height, Converted_Hand, Converted_Arm, Pos
     })
 
     # Add interaction terms
-    for group in df_filtered['Position_Group'].unique():
+    for group in df['Position_Group'].unique():
         input_df[f'HS_Weight_x_{group}'] = HS_Weight if Position_Group == group else 0
 
     # Add missing columns with 0
@@ -166,7 +166,7 @@ metric_names = list(metrics.keys())
 for i, metric in enumerate(metric_names):
     value = metrics[metric]
     with cols[i % 2]:
-        if metric in df_filtered.columns and df_filtered[metric].notna().sum() > 0:
+        if metric in df.columns and df[metric].notna().sum() > 0:
             fig = plot_percentile(df_filtered[metric].dropna(), value, metric)
             st.pyplot(fig)
         else:
