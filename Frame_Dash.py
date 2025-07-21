@@ -4,10 +4,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import percentileofscore
 import joblib
-
-import streamlit_authenticator as stauth
-
-import streamlit as st
 import streamlit_authenticator as stauth
 
 # --- Define users with plaintext passwords ---
@@ -24,9 +20,10 @@ user_data = {
     }
 }
 
-# --- Extract passwords and hash them ---
+# --- Hash passwords ---
 passwords = [user_data[user]["password"] for user in user_data]
-hashed_passwords = stauth.Hasher(passwords).generate()
+hasher = stauth.Hasher()
+hashed_passwords = hasher.generate(passwords)
 
 # --- Build credentials dictionary ---
 credentials = {
