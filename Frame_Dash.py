@@ -83,8 +83,8 @@ feature_importance = pd.DataFrame({
 print(feature_importance)
 
 # === 7. Prediction Intervals ===
-lower_bound = y_pred - 1.96 * y_std
-upper_bound = y_pred + 1.96 * y_std
+lower_bound = y_pred - 1.5 * y_std
+upper_bound = y_pred + 1.5 * y_std
 
 interval_df = pd.DataFrame({
     'Predicted': y_pred,
@@ -165,8 +165,8 @@ def predict_college_weight(HS_Weight, Height, Hand_Size, Arm_Length, Position_Gr
 
     # Predict with interval
     prediction, std = bayesian_pipeline.predict(input_df, return_std=True)
-    lower = prediction[0] - 1.96 * std[0]
-    upper = prediction[0] + 1.96 * std[0]
+    lower = prediction[0] - 1.5 * std[0]
+    upper = prediction[0] + 1.5 * std[0]
 
     return prediction[0], lower, upper
 
@@ -174,7 +174,7 @@ def predict_college_weight(HS_Weight, Height, Hand_Size, Arm_Length, Position_Gr
 if st.sidebar.button("Predict College Weight"):
     pred, low, high = predict_college_weight(hs_weight, height, hand_size, arm_length, position)
     st.markdown(f"### 📊 Predicted College Weight: **{pred:.2f} lbs**")
-    st.markdown(f"95% Prediction Interval: **({low:.2f}, {high:.2f}) lbs**")
+    st.markdown(f"Prediction Interval: **({low:.2f}, {high:.2f}) lbs**")
 
 
 
