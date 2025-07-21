@@ -93,7 +93,7 @@ interval_df = pd.DataFrame({
     'Actual': y_test.reset_index(drop=True)
 })
 
-
+print(interval_df)
 
 
 
