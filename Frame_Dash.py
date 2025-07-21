@@ -83,8 +83,8 @@ feature_importance = pd.DataFrame({
 print(feature_importance)
 
 # === 7. Prediction Intervals ===
-lower_bound = y_pred - 1.5 * y_std
-upper_bound = y_pred + 1.5 * y_std
+lower_bound = y_pred - 1.7 * y_std
+upper_bound = y_pred + 1.7 * y_std
 
 interval_df = pd.DataFrame({
     'Predicted': y_pred,
