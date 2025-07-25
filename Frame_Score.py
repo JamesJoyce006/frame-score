@@ -97,6 +97,20 @@ print(interval_df)
 
 
 
+# Save test set positions for residual analysis
+position_test = df.loc[X_test.index, 'Position_Group'].reset_index(drop=True)
+
+# Compute residuals and position-specific std multipliers
+residuals = y_test.reset_index(drop=True) - y_pred
+residual_df = pd.DataFrame({
+    'Position_Group': position_test,
+    'Residual': residuals
+})
+
+# Standard deviation of residuals by position, normalized to base std
+base_std = y_std.mean()
+position_std_multiplier = residual_df.groupby('Position_Group')['Residual'].std() / base_std
+position_std_multiplier = position_std_multiplier.fillna(1.7)
 
 
 
@@ -141,7 +155,6 @@ metrics = {
 }
 
 def predict_college_weight(HS_Weight, Height, Hand_Size, Arm_Length, Position_Group):
-    # Create input DataFrame
     input_df = pd.DataFrame({
         'HS_Weight': [HS_Weight],
         'Height': [Height],
@@ -150,30 +163,30 @@ def predict_college_weight(HS_Weight, Height, Hand_Size, Arm_Length, Position_Gr
         'Position_Group': [Position_Group]
     })
 
-    # Add interaction terms
     for group in df['Position_Group'].unique():
         input_df[f'HS_Weight_x_{group}'] = HS_Weight if Position_Group == group else 0
 
-    # Add missing columns with 0
     for col in features:
         if col not in input_df.columns:
             input_df[col] = 0
 
-    # Reorder columns
     input_df = input_df[features]
 
-    # Predict with interval
     prediction, std = bayesian_pipeline.predict(input_df, return_std=True)
-    lower = prediction[0] - 1.7 * std[0]
-    upper = prediction[0] + 1.7 * std[0]
 
-    return prediction[0], lower, upper
+    multiplier = position_std_multiplier.get(Position_Group, 1.7)
+    lower = prediction[0] - multiplier * std[0]
+    upper = prediction[0] + multiplier * std[0]
+
+    return prediction[0], lower, upper, multiplier
 
 # === Run Prediction ===
 if st.sidebar.button("Predict College Weight"):
-    pred, low, high = predict_college_weight(hs_weight, height, hand_size, arm_length, position)
+    pred, low, high, multiplier_used = predict_college_weight(hs_weight, height, hand_size, arm_length, position)
     st.markdown(f"### 📊 Predicted College Weight: **{pred:.2f} lbs**")
     st.markdown(f"Prediction Interval: **({low:.2f}, {high:.2f}) lbs**")
+    st.markdown(f"*Interval multiplier for {position}:* **{multiplier_used:.2f}× std dev**")
+
 
 
 
