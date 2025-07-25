@@ -6,7 +6,6 @@ from scipy.stats import percentileofscore
 import joblib
 import streamlit_authenticator as stauth
 
-## This is 2 differences
 
 df = pd.read_csv('cleaned_for_python.csv')
 df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Position_Group']]
@@ -112,7 +111,6 @@ st.sidebar.image("ucla_logo.png", use_container_width=True)
 
 st.title("Frame Score Model")
 
-#This is one difference
 
 # Sidebar filters
 st.sidebar.header("Filters")
