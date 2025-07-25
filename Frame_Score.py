@@ -113,9 +113,8 @@ position_std_multiplier = residual_df.groupby('Position_Group')['Residual'].std(
 position_std_multiplier = position_std_multiplier.fillna(1.7)
 
 
-
-
-
+print("----------This is the residuals for each position---------- ")
+print(position_std_multiplier)
 #
 #
 #
