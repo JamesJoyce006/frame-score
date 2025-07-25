@@ -4,11 +4,11 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import percentileofscore
 import joblib
-import streamlit_authenticator as stauth
 
 
-df = pd.read_csv('cleaned_for_python.csv')
-df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Position_Group']]
+
+df = pd.read_csv('cleaned_data_no_outliers.csv')
+#df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Position_Group']]
 
 import pandas as pd
 import numpy as np
@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 df = df.rename(columns={'Weight.x': 'College_Weight', 'Weight.y': 'HS_Weight','Converted_Arm':'Arm_Length','Converted_Hand':'Hand_Size'})
-df = df[~df['Position_Group'].isin(['OL', 'DL'])]
+#df = df[~df['Position_Group'].isin(['OL', 'DL'])]
 df = df.fillna(df.mean(numeric_only=True))
 df['Position_Group'] = df['Position_Group'].astype('category')
 print(df.head())
@@ -117,10 +117,10 @@ st.sidebar.header("Filters")
 
 # Add 'All' option to position filter
 position_options = sorted(
-    [pos for pos in df["Position_Group"].dropna().unique() if pos not in ["DL", "OL"]]
+    [pos for pos in df["Position_Group"].dropna().unique()]
 )
 
-
+# if pos not in ["DL", "OL"]
 
 # === User Inputs ===
 st.sidebar.header("Enter Player Metrics")
