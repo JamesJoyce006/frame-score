@@ -64,8 +64,6 @@ import streamlit as st
 # x-axis is just the index (0, 1, 2, ...)
 x = interval_data.index
 predicted = interval_data["Predicted"]
-lower = interval_data["Lower Bound (95%)"]
-upper = interval_data["Upper Bound (95%)"]
 actual = interval_data["Actual"]
 
 
