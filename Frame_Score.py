@@ -184,7 +184,6 @@ if st.sidebar.button("Predict College Weight"):
     pred, low, high, multiplier_used = predict_college_weight(hs_weight, height, hand_size, arm_length, position)
     st.markdown(f"### 📊 Predicted College Weight: **{pred:.2f} lbs**")
     st.markdown(f"Prediction Interval: **({low:.2f}, {high:.2f}) lbs**")
-    st.markdown(f"*Interval multiplier for {position}:* **{multiplier_used:.2f}× std dev**")
 
 
 
