@@ -148,7 +148,7 @@ position_group_map = {
 df["Group_Positions"] = df["Position_Group"].map(position_group_map)
 
 # === User Inputs ===
-st.sidebar.header("Enter Player Metrics")
+
 position_group_options = ['BIGS', 'MIDS', 'SKILLS', 'Position']
 position_group_selected = st.sidebar.selectbox("Filter Visualizations by Position Group", position_group_options)
 
