@@ -137,6 +137,8 @@ position_options = sorted(
 
 # === User Inputs ===
 st.sidebar.header("Enter Player Metrics")
+position_group_options = df['Position_Group'].dropna().unique().tolist()
+position_group_selected = st.sidebar.selectbox("Filter Visualizations by Position Group", position_group_options)
 position = st.sidebar.selectbox("Position", position_options)
 height = st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", min_value=50.0, max_value=7000.0, step= .125)
 hand_size = st.sidebar.number_input("Hand Size (inches)", min_value=5.0, max_value=13.0, step=0.125)
