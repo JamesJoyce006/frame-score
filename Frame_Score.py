@@ -135,18 +135,42 @@ position_options = sorted(
 
 # if pos not in ["DL", "OL"]
 
+position_group_map = {
+    "DL": "BIGS",
+    "OL": "BIGS",
+    "OLB": "BIGS",
+    "RB": "MIDS",
+    "LB": "MIDS",
+    "SP": "MIDS",
+    "QB": "MIDS",
+    "TE": "MIDS",
+    "FB": "MIDS",
+    "DB": "SKILLS",
+    "SAF": "SKILLS",
+    "WR": "SKILLS",
+}
+
+# Map group to Position column
+df["Group_Positions"] = df["Position_Group"].map(position_group_map)
+
 # === User Inputs ===
 st.sidebar.header("Enter Player Metrics")
-position_group_options = df['Position_Group'].dropna().unique().tolist()
+position_group_options = ['BIGS', 'MIDS', 'SKILLS', 'Position']
 position_group_selected = st.sidebar.selectbox("Filter Visualizations by Position Group", position_group_options)
+
 position = st.sidebar.selectbox("Position", position_options)
-height = st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", min_value=50.0, max_value=7000.0, step= .125)
+height = st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", min_value=50.0, max_value=7000.0, step=0.125)
 hand_size = st.sidebar.number_input("Hand Size (inches)", min_value=5.0, max_value=13.0, step=0.125)
 arm_length = st.sidebar.number_input("Arm Length (inches)", min_value=10.0, max_value=90.0, step=0.125)
 hs_weight = st.sidebar.number_input("High School Weight", min_value=0.0, max_value=400.0, step=0.125)
 
+# === Filter Based on User Selection ===
+if position_group_selected == 'Position':
+    df_filtered = df[df["Position_Group"] == position]
+else:
+    df_filtered = df[df["Group_Positions"] == position_group_selected]
 
-df_filtered = df[df["Position_Group"] == position]
+        
 metrics = {
     "Height": height,
     "Hand_Size": hand_size,
