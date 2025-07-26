@@ -1,17 +1,7 @@
 import streamlit as st
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy.stats import percentileofscore
-import joblib
-
-
-
-df = pd.read_csv('cleaned_data_no_outliers.csv')
-#df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Position_Group']]
-
-import pandas as pd
 import numpy as np
+import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
@@ -19,7 +9,15 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import BayesianRidge
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
-import seaborn as sns
+from scipy.stats import percentileofscore
+import joblib
+
+
+
+
+df = pd.read_csv('cleaned_data_no_outliers.csv')
+#df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Position_Group']]
+
 
 df = df.rename(columns={'Weight.x': 'College_Weight', 'Weight.y': 'HS_Weight','Converted_Arm':'Arm_Length','Converted_Hand':'Hand_Size'})
 #df = df[~df['Position_Group'].isin(['OL', 'DL'])]
@@ -28,9 +26,6 @@ df['Position_Group'] = df['Position_Group'].astype('category')
 print(df.head())
 # Ridge Regression Model to Predict College Weight from HS Weight and Other Features
 
-#
-#
-#
 
 
 
@@ -44,7 +39,7 @@ for group in df['Position_Group'].unique():
 interaction_terms = [f'HS_Weight_x_{group}' for group in df['Position_Group'].unique()]
 features = ['Height', 'HS_Weight','Hand_Size', 'Arm_Length'] + interaction_terms
 X = df[features]
-y = df['College_Weight']  # replace with the actual column name if different
+y = df['College_Weight']  
 
 # === 2. Train/Test Split ===
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -133,7 +128,6 @@ position_options = sorted(
     [pos for pos in df["Position_Group"].dropna().unique()]
 )
 
-# if pos not in ["DL", "OL"]
 
 position_group_map = {
     "DL": "BIGS",
