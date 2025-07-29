@@ -259,7 +259,7 @@ def plot_percentile_interactive(data, value, metric):
         yaxis_title="Density",
         template='simple_white',
         margin=dict(l=40, r=40, t=40, b=40),
-        width=900,
+        width=1500,
     )
 
     return fig
