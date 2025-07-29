@@ -286,7 +286,7 @@ for i, metric in enumerate(metric_names):
     with cols[i % 2]:
         if metric in df.columns and df[metric].notna().sum() > 0:
             fig = plot_percentile_interactive(df_filtered[metric].dropna(), value, metric)
-            st.pyplot(fig)
+            st.plotly_chart(fig, use_container_width=True)
         else:
             st.write(f"{metric} not found or insufficient data.")
 
