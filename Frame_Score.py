@@ -211,6 +211,57 @@ if st.sidebar.button("Predict College Weight"):
 # UCLA colors
 UCLA_BLUE = "#2774AE"
 UCLA_GOLD = "#FFD100"
+def plot_percentile_interactive(data, value, metric):
+    # Density estimate
+    kde = gaussian_kde(data)
+    x_vals = np.linspace(min(data), max(data), 500)
+    y_vals = kde(x_vals)
+
+    # Compute percentile
+    percentile = percentileofscore(data, value)
+
+    # Create interactive plot
+    fig = go.Figure()
+
+    # Density curve
+    fig.add_trace(go.Scatter(
+        x=x_vals,
+        y=y_vals,
+        fill='tozeroy',
+        mode='lines',
+        name='Density',
+        line=dict(color=UCLA_GOLD)
+    ))
+
+    # Vertical line at user value
+    fig.add_trace(go.Scatter(
+        x=[value, value],
+        y=[0, max(y_vals)*1.05],
+        mode='lines',
+        name='Your Value',
+        line=dict(color=UCLA_BLUE, dash='dash')
+    ))
+
+    # Annotation for value and percentile
+    fig.add_annotation(
+        x=value,
+        y=max(y_vals)*0.05,
+        text=f"{value}<br>{percentile:.1f}th pct",
+        showarrow=True,
+        arrowhead=2,
+        font=dict(color=UCLA_BLUE, size=12)
+    )
+
+    # Layout
+    fig.update_layout(
+        title=f"{metric} Distribution",
+        xaxis_title=metric,
+        yaxis_title="Density",
+        template='simple_white',
+        margin=dict(l=40, r=40, t=40, b=40)
+    )
+
+    return fig
 
 # Plotting function
 def plot_percentile(data, value, metric):
@@ -234,7 +285,7 @@ for i, metric in enumerate(metric_names):
     value = metrics[metric]
     with cols[i % 2]:
         if metric in df.columns and df[metric].notna().sum() > 0:
-            fig = plot_percentile(df_filtered[metric].dropna(), value, metric)
+            fig = plot_percentile_interactive(df_filtered[metric].dropna(), value, metric)
             st.pyplot(fig)
         else:
             st.write(f"{metric} not found or insufficient data.")
