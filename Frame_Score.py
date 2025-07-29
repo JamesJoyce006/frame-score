@@ -170,10 +170,10 @@ st.sidebar.selectbox("Position",
     index=position_options.index(st.session_state["position"]),
     key="position")
 
-st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", 50.0, 7000.0, step=0.125, key="height")
-st.sidebar.number_input("Hand Size (inches)", 5.0, 13.0, step=0.125, key="hand_size")
-st.sidebar.number_input("Arm Length (inches)", 10.0, 90.0, step=0.125, key="arm_length")
-st.sidebar.number_input("High School Weight", 0.0, 400.0, step=0.125, key="hs_weight")
+st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", 65.0, 84.0, step=0.125, key="height")
+st.sidebar.number_input("Hand Size (inches)", 8.0, 13.0, step=0.125, key="hand_size")
+st.sidebar.number_input("Arm Length (inches)", 28.0, 90.0, step=0.125, key="arm_length")
+st.sidebar.number_input("High School Weight", 60.0, 400.0, step=0.125, key="hs_weight")
 
 # Assign values from session state
 position_group_selected = st.session_state["position_group_selected"]
