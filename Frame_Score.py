@@ -258,7 +258,8 @@ def plot_percentile_interactive(data, value, metric):
         xaxis_title=metric,
         yaxis_title="Density",
         template='simple_white',
-        margin=dict(l=40, r=40, t=40, b=40)
+        margin=dict(l=40, r=40, t=40, b=40),
+        width=700,
     )
 
     return fig
@@ -286,6 +287,7 @@ for i, metric in enumerate(metric_names):
     with cols[i % 2]:
         if metric in df.columns and df[metric].notna().sum() > 0:
             fig = plot_percentile_interactive(df_filtered[metric].dropna(), value, metric)
+            
             st.plotly_chart(fig, use_container_width=False)
         else:
             st.write(f"{metric} not found or insufficient data.")
