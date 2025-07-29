@@ -160,18 +160,28 @@ for key, val in defaults.items():
     st.session_state.setdefault(key, val)
 
 # Sidebar inputs
-st.session_state["position_group_selected"] = st.sidebar.selectbox(
-    "Filter Visualizations by Position Group", position_group_options,
-    index=position_group_options.index(st.session_state["position_group_selected"]), key="position_group_selected")
+st.sidebar.selectbox("Filter Visualizations by Position Group",
+    position_group_options,
+    index=position_group_options.index(st.session_state["position_group_selected"]),
+    key="position_group_selected")
 
-st.session_state["position"] = st.sidebar.selectbox(
-    "Position", position_options,
-    index=position_options.index(st.session_state["position"]), key="position")
+st.sidebar.selectbox("Position",
+    position_options,
+    index=position_options.index(st.session_state["position"]),
+    key="position")
 
-st.session_state["height"] = st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", 50.0, 7000.0, step=0.125, key="height")
-st.session_state["hand_size"] = st.sidebar.number_input("Hand Size (inches)", 5.0, 13.0, step=0.125, key="hand_size")
-st.session_state["arm_length"] = st.sidebar.number_input("Arm Length (inches)", 10.0, 90.0, step=0.125, key="arm_length")
-st.session_state["hs_weight"] = st.sidebar.number_input("High School Weight", 0.0, 400.0, step=0.125, key="hs_weight")
+st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", 50.0, 7000.0, step=0.125, key="height")
+st.sidebar.number_input("Hand Size (inches)", 5.0, 13.0, step=0.125, key="hand_size")
+st.sidebar.number_input("Arm Length (inches)", 10.0, 90.0, step=0.125, key="arm_length")
+st.sidebar.number_input("High School Weight", 0.0, 400.0, step=0.125, key="hs_weight")
+
+# Assign values from session state
+position_group_selected = st.session_state["position_group_selected"]
+position = st.session_state["position"]
+height = st.session_state["height"]
+hand_size = st.session_state["hand_size"]
+arm_length = st.session_state["arm_length"]
+hs_weight = st.session_state["hs_weight"]
 
 # Assign values from session state
 position_group_selected = st.session_state["position_group_selected"]
