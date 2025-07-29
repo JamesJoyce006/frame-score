@@ -151,13 +151,35 @@ df["Group_Positions"] = df["Position_Group"].map(position_group_map)
 # === User Inputs ===
 
 position_group_options = ['BIGS', 'MIDS', 'SKILLS', 'Position']
-position_group_selected = st.sidebar.selectbox("Filter Visualizations by Position Group", position_group_options)
 
-position = st.sidebar.selectbox("Position", position_options)
-height = st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", min_value=50.0, max_value=7000.0, step=0.125)
-hand_size = st.sidebar.number_input("Hand Size (inches)", min_value=5.0, max_value=13.0, step=0.125)
-arm_length = st.sidebar.number_input("Arm Length (inches)", min_value=10.0, max_value=90.0, step=0.125)
-hs_weight = st.sidebar.number_input("High School Weight", min_value=0.0, max_value=400.0, step=0.125)
+defaults = {
+    "position": position_options[0], "height": 6000.0, "hand_size": 9.0,
+    "arm_length": 30.0, "hs_weight": 200.0, "position_group_selected": position_group_options[0]
+}
+for key, val in defaults.items():
+    st.session_state.setdefault(key, val)
+
+# Sidebar inputs
+st.session_state["position_group_selected"] = st.sidebar.selectbox(
+    "Filter Visualizations by Position Group", position_group_options,
+    index=position_group_options.index(st.session_state["position_group_selected"]), key="position_group_selected")
+
+st.session_state["position"] = st.sidebar.selectbox(
+    "Position", position_options,
+    index=position_options.index(st.session_state["position"]), key="position")
+
+st.session_state["height"] = st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", 50.0, 7000.0, step=0.125, key="height")
+st.session_state["hand_size"] = st.sidebar.number_input("Hand Size (inches)", 5.0, 13.0, step=0.125, key="hand_size")
+st.session_state["arm_length"] = st.sidebar.number_input("Arm Length (inches)", 10.0, 90.0, step=0.125, key="arm_length")
+st.session_state["hs_weight"] = st.sidebar.number_input("High School Weight", 0.0, 400.0, step=0.125, key="hs_weight")
+
+# Assign values from session state
+position_group_selected = st.session_state["position_group_selected"]
+position = st.session_state["position"]
+height = st.session_state["height"]
+hand_size = st.session_state["hand_size"]
+arm_length = st.session_state["arm_length"]
+hs_weight = st.session_state["hs_weight"]
 
 # === Filter Based on User Selection ===
 if position_group_selected == 'Position':
