@@ -14,6 +14,7 @@ from scipy.stats import gaussian_kde, percentileofscore
 
 
 
+st.set_page_config(layout="wide")
 
 df = pd.read_csv('cleaned_data_no_outliers.csv')
 #df = df[['Weight.x','Weight.y','Height','Converted_Arm','Converted_Hand','Position_Group']]
