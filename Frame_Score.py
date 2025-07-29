@@ -229,7 +229,7 @@ def plot_percentile_interactive(data, value, metric):
         y=y_vals,
         fill='tozeroy',
         mode='lines',
-        name='Density',
+        name='Distribution',
         line=dict(color=UCLA_GOLD)
     ))
 
@@ -238,7 +238,7 @@ def plot_percentile_interactive(data, value, metric):
         x=[value, value],
         y=[0, max(y_vals)*1.05],
         mode='lines',
-        name='Your Value',
+        name='Player Value',
         line=dict(color=UCLA_BLUE, dash='dash')
     ))
 
@@ -258,7 +258,7 @@ def plot_percentile_interactive(data, value, metric):
         xaxis_title=metric,
         yaxis_title="Density",
         template='simple_white',
-        margin=dict(l=40, r=40, t=40, b=40),
+        margin=dict(l=20, r=20, t=40, b=40),
         width=1500,
     )
 
