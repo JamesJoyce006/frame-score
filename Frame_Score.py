@@ -153,7 +153,7 @@ df["Group_Positions"] = df["Position_Group"].map(position_group_map)
 position_group_options = ['BIGS', 'MIDS', 'SKILLS', 'Position']
 
 defaults = {
-    "position": position_options[0], "height": 6000.0, "hand_size": 9.0,
+    "position": position_options[0], "height": 60.0, "hand_size": 9.0,
     "arm_length": 30.0, "hs_weight": 200.0, "position_group_selected": position_group_options[0]
 }
 for key, val in defaults.items():
