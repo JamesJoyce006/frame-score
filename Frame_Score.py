@@ -153,7 +153,7 @@ df["Group_Positions"] = df["Position_Group"].map(position_group_map)
 position_group_options = ['BIGS', 'MIDS', 'SKILLS', 'Position']
 
 defaults = {
-    "position": position_options[0], "height": 60.0, "hand_size": 9.0,
+    "position": position_options[0], "height": 65.0, "hand_size": 9.0,
     "arm_length": 30.0, "hs_weight": 200.0, "position_group_selected": position_group_options[0]
 }
 for key, val in defaults.items():
@@ -170,9 +170,9 @@ st.sidebar.selectbox("Position",
     index=position_options.index(st.session_state["position"]),
     key="position")
 
-st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", 65.0, 84.0, step=0.125, key="height")
+st.sidebar.number_input("Height (format: 6003 = 6'0\"3)", 63.0, 84.0, step=0.125, key="height")
 st.sidebar.number_input("Hand Size (inches)", 8.0, 13.0, step=0.125, key="hand_size")
-st.sidebar.number_input("Arm Length (inches)", 28.0, 90.0, step=0.125, key="arm_length")
+st.sidebar.number_input("Arm Length (inches)", 26.0, 90.0, step=0.125, key="arm_length")
 st.sidebar.number_input("High School Weight", 60.0, 400.0, step=0.125, key="hs_weight")
 
 # Assign values from session state
