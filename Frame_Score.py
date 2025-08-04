@@ -59,10 +59,14 @@ bayesian_pipeline = Pipeline([
 # === 4. Fit Model ===
 bayesian_pipeline.fit(X_train, y_train)
 
+
+print(f"Training RMSE: {rmse:.2f}")
+print(f"Training R^2: {r2:.3f}")
 # === 5. Evaluate ===
 y_pred, y_std = bayesian_pipeline.predict(X_test, return_std=True)
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 r2 = r2_score(y_test, y_pred)
+
 
 print(f"Test RMSE: {rmse:.2f}")
 print(f"Test R^2: {r2:.3f}")
