@@ -1,0 +1,26 @@
+data_dir: data
+model_dir: models
+output_dir: outputs
+random_seed: 42
+rolling_windows:
+- 3
+- 5
+seasons:
+- 2018
+- 2019
+- 2020
+- 2021
+- 2022
+- 2023
+- 2024
+test_seasons:
+- 2024
+train_seasons:
+- 2018
+- 2019
+- 2020
+- 2021
+- 2022
+use_ridge: true
+val_seasons:
+- 2023
